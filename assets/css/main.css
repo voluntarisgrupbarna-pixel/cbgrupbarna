@@ -1,0 +1,665 @@
+/* ═══════════════════════════════════════════════════════════════
+   CB Grup Barna · main.css
+   Variables globals, reset, tipografia, components compartits
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── IMPORTS ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600&display=swap');
+
+/* ── VARIABLES ───────────────────────────────────────────────── */
+:root {
+  --black:  #040404;
+  --red:    #C8102E;
+  --cream:  #F2EDE6;
+  --wd:     rgba(242,237,230,.6);
+  --s1:     #0a0a0a;
+  --s2:     #0f0f0f;
+  --bd:     rgba(242,237,230,.08);
+  --border: rgba(242,237,230,.08);
+  --mw:     1120px;
+  --top:    64px;
+}
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ── SKIP LINK ───────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--red);
+  color: var(--cream);
+  padding: .4rem .8rem;
+  font-size: .7rem;
+  z-index: 9999;
+  text-decoration: none;
+}
+.skip-link:focus { top: 1rem; }
+
+/* ── TIPOGRAFIA UTILS ────────────────────────────────────────── */
+.r { color: var(--red); }
+strong { font-weight: 600; }
+a { color: inherit; }
+
+/* ── HEADER · TOPBAR ─────────────────────────────────────────── */
+.tb {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--top);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  background: rgba(4,4,4,.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--bd);
+  z-index: 8000;
+  gap: 1rem;
+}
+.tb-l { display: flex; align-items: center; gap: .75rem; }
+
+/* Burger */
+.burg {
+  width: 38px; height: 38px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 5px; background: transparent; border: none;
+  cursor: pointer; padding: 6px;
+}
+.burg span {
+  display: block; width: 20px; height: 1.5px;
+  background: var(--cream); transition: all .3s ease;
+}
+.burg.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.burg.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.burg.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Prize center */
+.prize-center {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  text-align: center; pointer-events: none;
+}
+.prize-main { font-size: .6rem; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; }
+.prize-sub { font-size: .5rem; letter-spacing: .15em; color: var(--red); text-transform: uppercase; margin-top: 1px; }
+
+/* Lang */
+.lang button {
+  background: transparent; border: 1px solid var(--bd);
+  color: rgba(242,237,230,.4); cursor: pointer;
+  font-family: 'Outfit', sans-serif; font-size: .55rem;
+  letter-spacing: .2em; padding: 4px 8px; text-transform: uppercase;
+  transition: all .2s ease;
+}
+.lang button.on { color: var(--cream); border-color: rgba(200,16,46,.5); }
+
+/* ── OVERLAY (sidebar bg) ────────────────────────────────────── */
+.ov {
+  position: fixed; inset: 0; z-index: 7900;
+  background: rgba(4,4,4,.65); backdrop-filter: blur(3px);
+  opacity: 0; pointer-events: none; transition: opacity .3s ease;
+}
+.ov.sh { opacity: 1; pointer-events: auto; }
+
+/* ── SIDEBAR ─────────────────────────────────────────────────── */
+.sb {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: min(320px, 88vw);
+  background: #080808;
+  border-right: 1px solid var(--bd);
+  z-index: 8100;
+  overflow-y: auto;
+  padding-top: var(--top);
+  transform: translateX(-100%);
+  transition: transform .35s cubic-bezier(.22,1,.36,1);
+  display: flex; flex-direction: column;
+}
+.sb.op { transform: translateX(0); }
+.sb-hd {
+  display: flex; align-items: center; gap: .75rem;
+  padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--bd);
+  position: sticky; top: 0; background: #080808; z-index: 1;
+}
+.sb-ht { font-size: .6rem; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; }
+.sb-hs { font-size: .52rem; color: rgba(242,237,230,.3); letter-spacing: .1em; }
+.sb-lbl { font-size: .48rem; letter-spacing: .3em; text-transform: uppercase; color: rgba(242,237,230,.25); padding: .85rem 1.5rem .3rem; }
+.sb-div { height: 1px; background: var(--bd); margin: .5rem 1.5rem; }
+.sb-ft { font-size: .52rem; color: rgba(242,237,230,.2); padding: 1.5rem; line-height: 1.7; margin-top: auto; border-top: 1px solid var(--bd); }
+
+/* Sidebar items */
+.si {
+  display: flex; align-items: center; gap: 1rem;
+  padding: .65rem 1.5rem; text-decoration: none;
+  color: var(--cream); transition: background .2s ease;
+  border-left: 2px solid transparent;
+}
+.si:hover { background: rgba(242,237,230,.04); }
+.si.act { border-left-color: var(--red); background: rgba(200,16,46,.06); }
+.si-n { font-size: .52rem; letter-spacing: .15em; color: var(--red); min-width: 22px; font-family: monospace; }
+.si-t { font-size: .75rem; font-weight: 400; letter-spacing: .03em; }
+.si-s { font-size: .55rem; color: rgba(242,237,230,.35); margin-top: 1px; }
+
+.sd {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .5rem 1.5rem; text-decoration: none;
+  color: rgba(242,237,230,.6); transition: color .2s ease;
+  font-size: .72rem;
+}
+.sd:hover { color: var(--cream); }
+.sd-i { font-size: .85rem; width: 1.2rem; text-align: center; }
+.sd-n { letter-spacing: .02em; }
+
+/* ── PROGRESS BAR ────────────────────────────────────────────── */
+#prog {
+  position: fixed; top: 0; left: 0; height: 2px;
+  background: var(--red); z-index: 9000; width: 0;
+  box-shadow: 0 0 8px rgba(200,16,46,.6);
+  transition: width .1s linear;
+}
+
+/* ── SECTIONS BASE ───────────────────────────────────────────── */
+.sec { padding: 5rem 1.5rem; }
+.sec-s1 { background: var(--s1); }
+.sec-s2 { background: var(--s2); }
+.sec-dk { background: var(--black); }
+.cw { max-width: var(--mw); margin: 0 auto; }
+
+/* ── TIPOGRAFIA SECCIONS ─────────────────────────────────────── */
+.ey {
+  font-size: .58rem; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--red); font-weight: 500; margin-bottom: 1.25rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.ey::before { content: ''; width: 18px; height: 1px; background: var(--red); }
+
+.stl {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700; line-height: 1.08;
+  margin-bottom: 1.75rem;
+}
+.P {
+  font-size: clamp(.88rem, 2.2vw, 1rem);
+  line-height: 1.8; color: var(--wd);
+  max-width: 740px; margin-bottom: 1.25rem;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+.btn-r, .btn-o, .btn-ig {
+  display: inline-flex; align-items: center; gap: .5rem;
+  text-decoration: none; font-family: 'Outfit', sans-serif;
+  font-size: .68rem; font-weight: 500; letter-spacing: .2em;
+  text-transform: uppercase; padding: .85rem 1.75rem;
+  transition: all .28s ease; cursor: pointer;
+}
+.btn-r {
+  background: var(--red); color: var(--cream); border: none;
+}
+.btn-r:hover { background: #a50f25; transform: translateY(-1px); }
+.btn-o {
+  background: transparent; color: var(--cream);
+  border: 1px solid rgba(242,237,230,.22);
+}
+.btn-o:hover { border-color: rgba(200,16,46,.6); color: var(--cream); }
+.btn-ig {
+  background: transparent; color: var(--cream);
+  border: 1px solid rgba(242,237,230,.2);
+}
+.btn-ig:hover { border-color: rgba(200,16,46,.5); }
+
+/* ── DATA BLOCKS ─────────────────────────────────────────────── */
+.db {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  border: 1px solid var(--bd); margin: 2rem 0;
+}
+.dbi {
+  padding: 1.5rem 1rem; text-align: center;
+  border-right: 1px solid var(--bd);
+}
+.dbi:last-child { border-right: none; }
+.dbn {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700; line-height: 1;
+  color: var(--cream);
+}
+.dbn span { font-size: 55%; color: var(--red); }
+.dbl { font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(242,237,230,.35); margin-top: .4rem; }
+.dbs { font-size: .52rem; color: rgba(242,237,230,.2); margin-top: .2rem; }
+
+/* ── BLOCKQUOTE ──────────────────────────────────────────────── */
+.bq {
+  border-left: 2px solid var(--red);
+  padding: 1.25rem 1.5rem;
+  background: rgba(200,16,46,.04);
+  margin: 1.5rem 0;
+}
+.bq p { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.5vw, 1.2rem); font-style: italic; line-height: 1.7; color: var(--cream); }
+.bq cite { display: block; font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(242,237,230,.3); margin-top: .75rem; font-style: normal; }
+
+/* ── TABLE ───────────────────────────────────────────────────── */
+.tbl { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .85rem; }
+.tbl th { padding: .75rem 1rem; text-align: left; font-size: .55rem; letter-spacing: .15em; text-transform: uppercase; color: rgba(242,237,230,.4); border-bottom: 1px solid var(--bd); font-weight: 500; }
+.tbl td { padding: .85rem 1rem; border-bottom: 1px solid var(--bd); color: var(--wd); }
+.tbl tr.hl td { color: var(--cream); font-weight: 500; }
+.tbl td.rd { color: var(--red); }
+
+/* ── PILLS (teoria) ──────────────────────────────────────────── */
+.pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; }
+.pill {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .45rem .85rem; border: 1px solid var(--bd);
+  font-size: .6rem; letter-spacing: .1em; text-decoration: none;
+  color: var(--wd); transition: all .2s ease;
+}
+.pill:hover { border-color: rgba(200,16,46,.4); color: var(--cream); }
+.pill-n { color: var(--red); font-size: .5rem; letter-spacing: .15em; }
+
+/* ── TEORIA CARDS ────────────────────────────────────────────── */
+.tc {
+  display: block; padding: 1.5rem;
+  border: 1px solid var(--bd); margin-bottom: .5rem;
+  text-decoration: none; color: var(--cream);
+  transition: background .2s ease, border-color .2s ease;
+  position: relative;
+}
+.tc:hover { background: rgba(242,237,230,.03); border-color: rgba(200,16,46,.25); }
+.tc-top { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform .3s ease; }
+.tc:hover .tc-top { transform: scaleX(1); }
+.tc-num { font-size: .55rem; letter-spacing: .2em; color: var(--red); margin-bottom: .5rem; font-family: monospace; }
+.tc-t { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: .5rem; }
+.tc-d { font-size: .78rem; color: var(--wd); line-height: 1.6; }
+.tc-r { font-size: .6rem; letter-spacing: .12em; color: var(--red); margin-top: .75rem; text-transform: uppercase; }
+
+/* ── CAROUSEL ────────────────────────────────────────────────── */
+.carousel-wrap { overflow: hidden; position: relative; }
+.carousel-track { display: flex; height: 100%; gap: 4px; will-change: transform; }
+.carousel-track img { height: 100%; width: auto; object-fit: cover; flex-shrink: 0; }
+.carousel-fade {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to right, rgba(4,4,4,.5) 0%, transparent 20%, transparent 80%, rgba(4,4,4,.5) 100%);
+}
+
+/* ── FOOTER ──────────────────────────────────────────────────── */
+footer { padding: 3rem 1.5rem; border-top: 1px solid var(--bd); background: #020202; }
+.ft-claim { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(.9rem, 2vw, 1.1rem); color: rgba(242,237,230,.4); margin-bottom: 1rem; }
+.ft-contact { font-size: .65rem; color: rgba(242,237,230,.25); letter-spacing: .05em; margin-bottom: 2rem; line-height: 1.8; }
+.ft-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+.ft-ct { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(242,237,230,.3); margin-bottom: .75rem; }
+.ft-lk { display: block; font-size: .7rem; color: rgba(242,237,230,.45); text-decoration: none; margin-bottom: .35rem; transition: color .2s; }
+.ft-lk:hover { color: var(--cream); }
+.ft-bot { font-size: .55rem; color: rgba(242,237,230,.15); letter-spacing: .1em; border-top: 1px solid var(--bd); padding-top: 1.5rem; }
+
+/* ── FIXED LOGOS ─────────────────────────────────────────────── */
+.fixed-logos {
+  position: fixed; bottom: 1.25rem; right: 1.25rem;
+  display: flex; gap: .5rem; z-index: 7800;
+  flex-direction: column; align-items: flex-end;
+}
+.logo-pill {
+  background: rgba(10,10,10,.9); border: 1px solid var(--bd);
+  padding: .35rem .6rem; backdrop-filter: blur(8px);
+}
+.logo-pill img { height: 22px; width: auto; display: block; }
+.lp-red { border-color: rgba(200,16,46,.3); }
+
+/* ── PAGE HERO (subpàgines) ──────────────────────────────────── */
+.page-hero {
+  padding: 7rem 1.5rem 3rem;
+  background: linear-gradient(180deg, var(--black), var(--s1));
+  position: relative; overflow: hidden;
+}
+.page-hero::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; bottom: 0; width: 3px;
+  background: var(--red);
+}
+
+.crumb { font-size: .58rem; letter-spacing: .25em; text-transform: uppercase; color: rgba(242,237,230,.3); margin-bottom: 1rem; }
+.crumb a { color: var(--red); text-decoration: none; }
+
+.page-eyebrow { display: flex; align-items: center; gap: .6rem; font-size: .6rem; letter-spacing: .35em; text-transform: uppercase; color: var(--red); font-weight: 500; margin-bottom: 1.25rem; }
+.page-eyebrow::before { content: ''; width: 22px; height: 1px; background: var(--red); }
+
+.page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 6vw, 3.5rem); font-weight: 700; line-height: 1.05; margin-bottom: 1rem; }
+.page-title .r { color: var(--red); font-style: italic; }
+
+.page-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(.95rem, 2.5vw, 1.15rem); font-style: italic; color: rgba(242,237,230,.55); line-height: 1.7; max-width: 680px; }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes fu { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sp { 0%, 100% { opacity: 0; transform: scaleY(0.3) translateY(-10px); } 50% { opacity: 1; transform: scaleY(1) translateY(0); } }
+
+/* ── SCROLL REVEAL ───────────────────────────────────────────── */
+.rev { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.rev.in { opacity: 1; transform: translateY(0); }
+
+/* ── NEXT-PREV NAV (subpàgines) ──────────────────────────────── */
+.next-prev { display: flex; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .sec { padding: 3.5rem 1.25rem; }
+  .db { grid-template-columns: repeat(2, 1fr); }
+  .dbi { border-bottom: 1px solid var(--bd); }
+  .ft-cols { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  :root { --top: 56px; }
+  .tb { padding: 0 1rem; }
+  .prize-center { display: none; }
+}
+
+/* ── MILLORES UX GLOBALS ─────────────────────────────────── */
+/* Millor contrast de text */
+.page-sub { opacity: .85; }
+/* Sections amb respiració extra */
+.sec { padding: clamp(3rem, 6vw, 5rem) 1.5rem; }
+/* Cards: transicions suaus */
+.re-card, .def-list li { transition: background .2s; }
+/* Sidebar actiu: color accent */
+.si.act { background: rgba(200,16,46,.08); border-left: 2px solid var(--red); }
+.si.act .si-t { color: var(--red); }
+/* Mòbil: ig-cards menys altes */
+@media (max-width:640px) {
+  .ig-card-play { min-height: 180px; }
+}
+/* Botó CTA: millor hover */
+.btn-r:hover { filter: brightness(1.15); transform: translateY(-1px); }
+.btn-o:hover { border-color: var(--cream); color: var(--cream); transform: translateY(-1px); }
+/* Footer: lleugera separació */
+footer { padding-top: clamp(2.5rem, 5vw, 4rem); }
+.ft-contact { margin: 1.2rem 0; opacity: .7; font-size: .78rem; line-height: 1.9; }
+/* Skip-link visible en focus */
+.skip-link:focus { opacity: 1; position: fixed; top: 1rem; left: 1rem; z-index: 9999; }
+/* Heading amb línia decorativa */
+.ey { position: relative; padding-left: 2.5rem; }
+.ey::before { content: '—'; position: absolute; left: 0; color: var(--red); }
+
+/* ══════════════════════════════════════════════════════════════
+   UX FIXES — CB Grup Barna Candidatura 2026
+   ══════════════════════════════════════════════════════════════ */
+
+/* FIX 1: Logos flotants — ocultar en mòbil per evitar que tapin text */
+@media (max-width: 768px) {
+  .fixed-logos { display: none !important; }
+}
+
+/* FIX 2: Hero interior — reduir espai buit excessiu entre títol i contingut */
+.page-hero {
+  padding-top: 5rem !important;
+  padding-bottom: 2rem !important;
+}
+.page-hero .page-title {
+  margin-bottom: .6rem !important;
+}
+.page-hero .page-sub {
+  margin-bottom: 1.2rem !important;
+}
+
+/* FIX 3: Breadcrumb — millor contrast i llegibilitat */
+.crumb {
+  font-size: .62rem !important;
+  letter-spacing: .15em !important;
+  color: rgba(242,237,230,.5) !important;
+  margin-bottom: .75rem !important;
+}
+.crumb a {
+  color: rgba(200,16,46,.8) !important;
+}
+.crumb a:hover {
+  color: var(--red) !important;
+  text-decoration: underline;
+}
+
+/* FIX 4: Hamburger més gran i accessible en mòbil */
+@media (max-width: 768px) {
+  .burg {
+    width: 44px !important;
+    height: 44px !important;
+    padding: 8px !important;
+  }
+}
+
+/* FIX 5: Sidebar — millor scroll i ample màxim en mòbil */
+@media (max-width: 768px) {
+  .sb {
+    width: min(320px, 90vw) !important;
+  }
+  .sb-ft {
+    font-size: .62rem !important;
+    line-height: 1.7 !important;
+  }
+}
+
+/* FIX 6: Resum executiu hero — espai proporcionat */
+.re-hero, .re-head {
+  padding-top: 4.5rem !important;
+  padding-bottom: 2.5rem !important;
+}
+
+/* FIX 7: Stats grid — millor en mòbil (2 columnes) */
+@media (max-width: 640px) {
+  .db {
+    grid-template-columns: 1fr 1fr !important;
+    gap: .75rem !important;
+  }
+  .re-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+/* FIX 8: Cards a pàgines interiors — padding consistent */
+@media (max-width: 640px) {
+  .re-card, .re-pilar, .def-list li {
+    padding: 1rem 1.1rem !important;
+  }
+  .cw {
+    padding-left: 1.1rem !important;
+    padding-right: 1.1rem !important;
+  }
+}
+
+/* FIX 9: barra de progrés — més visible */
+#prog {
+  height: 3px !important;
+}
+
+/* FIX 10: skip-link — completament ocult quan no hi és en focus */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  z-index: 9999;
+  transition: top .2s;
+}
+.skip-link:focus {
+  top: 1rem;
+  opacity: 1 !important;
+}
+
+/* FIX 11: header — garantir sempre visible i z-index alt */
+.tb {
+  z-index: 1000 !important;
+}
+
+/* FIX 12: Botó "Tornar" i next/prev — més espai i target area */
+.next-prev {
+  padding-top: 2rem !important;
+  padding-bottom: 1.5rem !important;
+  gap: .8rem !important;
+}
+.btn-r, .btn-o {
+  padding: .85rem 1.7rem !important;
+  font-size: .65rem !important;
+}
+@media (max-width: 640px) {
+  .next-prev {
+    flex-direction: column !important;
+  }
+  .btn-r, .btn-o {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+}
+
+/* FIX 13: ig-cards en grid 2 columnes quan l'espai ho permet */
+@media (min-width: 768px) {
+  .ig-partners-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* FIX 14: Tipografia — mida mínima en mòbil per llegibilitat */
+@media (max-width: 640px) {
+  .P, p {
+    font-size: .92rem !important;
+    line-height: 1.8 !important;
+  }
+  .bib-list li {
+    font-size: .8rem !important;
+  }
+}
+
+/* FIX 15: page-eyebrow — color i espai */
+.page-eyebrow {
+  opacity: .9 !important;
+  margin-bottom: .9rem !important;
+}
+
+/* ── MILLORES LECTURA I RITME VISUAL ──────────────────────── */
+
+/* Amplada de lectura òptima per a paràgrafs */
+.sec .P, .sec p.P {
+  max-width: 72ch;
+}
+
+/* Blockquote estilitzat */
+.bq {
+  border-left: 3px solid var(--red);
+  padding: 1.2rem 1.5rem;
+  margin: 2rem 0;
+  background: rgba(200,16,46,.04);
+  border-radius: 0 4px 4px 0;
+}
+.bq p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--cream);
+  margin-bottom: .4rem;
+}
+.bq cite {
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--red);
+  font-style: normal;
+}
+
+/* Taules responsive */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .82rem;
+}
+th {
+  background: rgba(200,16,46,.12);
+  color: var(--cream);
+  font-weight: 600;
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid rgba(200,16,46,.2);
+  text-align: left;
+}
+td {
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--bd);
+  color: var(--wd);
+  line-height: 1.6;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(242,237,230,.02); }
+
+/* Secció final de les teories (prev/next) */
+.sec:last-child {
+  border-top: 1px solid var(--bd);
+}
+
+/* Focus rings accessibles */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Suavitzar imatges */
+img {
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Menú hint — millor visibilitat */
+.menu-hint {
+  font-size: .6rem !important;
+  letter-spacing: .2em !important;
+  opacity: .5 !important;
+}
+
+/* Smooth scroll global */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Carousel imatges — height consistent */
+.carousel-wrap {
+  overflow: hidden;
+}
+.carousel-track img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* Stats .db en portada */
+@media (max-width: 480px) {
+  .db {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .dbi {
+    padding: .9rem .8rem !important;
+  }
+}

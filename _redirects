@@ -1,0 +1,7 @@
+# Static HTML files - serve directly, no SPA redirect
+/teories/*    /teories/:splat    200
+/el-club/*    /el-club/:splat    200
+/comunitat/*  /comunitat/:splat  200
+/investigacio/* /investigacio/:splat 200
+/patrocinis/* /patrocinis/:splat  200
+/assets/*     /assets/:splat     200

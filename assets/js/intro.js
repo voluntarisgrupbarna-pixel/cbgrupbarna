@@ -214,15 +214,15 @@
 
     // Carregar imatges del carousel
     initCarousel('carousel-track', 0.4, [
-      '/assets/img/players/p01.webp',
-      '/assets/img/players/p05.webp',
-      '/assets/img/players/p08.webp',
-      '/assets/img/players/p11.webp',
-      '/assets/img/players/p15.webp',
-      '/assets/img/players/p18.webp',
-      '/assets/img/alcalde/a01.webp',
-      '/assets/img/alcalde/a04.webp',
-      '/assets/img/alcalde/a09.webp',
+      '/cbgrupbarna/assets/img/players/p01.webp',
+      '/cbgrupbarna/assets/img/players/p05.webp',
+      '/cbgrupbarna/assets/img/players/p08.webp',
+      '/cbgrupbarna/assets/img/players/p11.webp',
+      '/cbgrupbarna/assets/img/players/p15.webp',
+      '/cbgrupbarna/assets/img/players/p18.webp',
+      '/cbgrupbarna/assets/img/alcalde/a01.webp',
+      '/cbgrupbarna/assets/img/alcalde/a04.webp',
+      '/cbgrupbarna/assets/img/alcalde/a09.webp',
     ]);
 
     // Auto-play la veu de la jugadora
@@ -309,7 +309,7 @@
       const audio = map[type];
       const nameMap = {
         jugadora: ['La veu d\'una jugadora', 'Des dels 5 anys fins als 18'],
-        mix:      ['Mix CB Grup Barna',      'Candidatura Premi Dona i Esport'],
+        mix:      ['Presentació del projecte', 'Candidatura Premi Dona i Esport'],
         musica:   ['Música orquestral',       'Instrumental'],
       };
       // Highlight botó actiu

@@ -22,10 +22,15 @@
     audMix       = document.getElementById('audio-mix');
     audMusica    = document.getElementById('audio-musica');
 
-    // Fade-in de 0.3s en el primer play
+    // Fade-in de 0.3s en el primer play + listener "ended" natiu
+    // (més fiable que el polling: alguns navegadors pausen abans
+    // que el RAF detecti currentTime >= duration - 0.25)
     [audJugadora, audMix, audMusica].forEach(a => {
       if (!a) return;
       a.volume = 0;
+      a.addEventListener('ended', () => {
+        if (currentAudio === a) handleAudioEnd();
+      });
     });
   }
 

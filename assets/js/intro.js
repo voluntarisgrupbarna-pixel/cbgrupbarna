@@ -290,16 +290,24 @@
     }
   }
 
-  /* S'executa quan l'àudio de la jugadora acaba */
+  /* S'executa quan un àudio acaba.
+     Flux: Marina (jugadora) → auto-avançar a Mare (mix) → CTA. */
   function handleAudioEnd() {
     if (progressRaf) cancelAnimationFrame(progressRaf);
     progressRaf = null;
 
+    const endedJugadora = currentAudio === audJugadora;
+
     // Fade out l'àudio
     if (currentAudio) fadeOut(currentAudio, 800, null);
 
-    // Mostrar CTA amb compte enrere automàtic
-    showNextStepHint(true);
+    if (endedJugadora && audMix) {
+      // Després de Marina, encadenar la veu de la Mare amb una pausa breu
+      setTimeout(() => { window.switchTrack('mix'); }, 1100);
+    } else {
+      // Després de la Mare (o de qualsevol altre track), CTA amb compte enrere
+      showNextStepHint(true);
+    }
   }
 
   /* ── CONTROLS PLAYER ────────────────────────────────────────── */
@@ -308,12 +316,12 @@
       const map = { jugadora: audJugadora, mix: audMix, musica: audMusica };
       const audio = map[type];
       const nameMap = {
-        jugadora: ['La veu d\'una jugadora', 'Des dels 5 anys fins als 18'],
-        mix:      ['Presentació del projecte', 'Candidatura Premi Dona i Esport'],
-        musica:   ['Música orquestral',       'Instrumental'],
+        jugadora: ['Marina García',          'Jugadora i entrenadora · des dels 5 anys'],
+        mix:      ['Resum executiu',         'Una mare del club explica la candidatura'],
+        musica:   ['Música orquestral',      'Instrumental'],
       };
       // Highlight botó actiu
-      ['jugadora','mix','musica'].forEach(k => {
+      ['jugadora','mix'].forEach(k => {
         const b = document.getElementById('btn-' + k);
         if (!b) return;
         const active = (k === type);
